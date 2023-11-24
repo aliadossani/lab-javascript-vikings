@@ -71,26 +71,25 @@ class War {
 
     }
     vikingAttack() {
+        return this.attack(this.vikingArmy, this.saxonArmy);
 
-        const viking = this.vikingArmy[0];
-        const saxon = this.saxonArmy[0]
-        const saxonHealthMessage = saxon.receiveDamage(viking.strength);
-        if (saxon.health <= 0) {
-            // remove saxon from army
-            this.saxonArmy.pop();
-        }
-        return saxonHealthMessage;
     }
     saxonAttack() {
-
-        const viking = this.vikingArmy[0];
-        const saxon = this.saxonArmy[0];
-        const vikingHealthMessage = viking.receiveDamage(saxon.strength);
-        if (viking.health <= 0) {
-            this.vikingArmy.pop();
-        }
-        return vikingHealthMessage;
+        return this.attack(this.saxonArmy, this.vikingArmy)
     }
+
+    attack(attackerArmy, attackedArmy) {
+        const attacker = attackerArmy[0];
+        const attacked = attackedArmy[0];
+
+        const healthMessage = attacked.receiveDamage(attacker.strength);
+        if (attacked.health <= 0) {
+            // remove attacked from army
+            attackedArmy.pop();
+        }
+        return healthMessage;
+    }
+
     showStatus() {
         if (!this.saxonArmy.length) {
             return "Vikings have won the war of the century!";
